@@ -1,4 +1,12 @@
 {
   "name": "HomeRock",
-  "app_id": ""
+  "app_id": "6875402f",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

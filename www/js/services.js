@@ -1,50 +1,253 @@
-angular.module('starter.services', [])
+angular.module('homeRock.services', [])
 
-.factory('Chats', function() {
+.factory('Devices', function(lodash) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
+  var devices_json = [
+    {
+      "name": "door-12345-1",
+      "type": "DoorNode",
+      "type_human_readable": "Door",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "5"
+    },
+    {
+      "name": "power-12345-4",
+      "type": "PowerNode",
+      "type_human_readable": "Pot",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "switch-12345-2",
+      "type": "SwitchNode",
+      "type_human_readable": "Socket",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "3"
+    },
+    {
+      "name": "power-12345-3",
+      "type": "PowerNode",
+      "type_human_readable": "Fridge",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "76"
+    },
+    {
+      "name": "thermostat-12345-1",
+      "type": "ThermostatNode",
+      "type_human_readable": "Thermostat",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/sen/temp",
+      "value": "22"
+    },
+    {
+      "name": "thermostat-12345-2",
+      "type": "ThermostatNode",
+      "type_human_readable": "Thermostat",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/sen/temp",
+      "value": "20"
+    },
+    {
+      "name": "power-12345-1",
+      "type": "PowerNode",
+      "type_human_readable": "Light bulb",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "thermostat-12345-4",
+      "type": "ThermostatNode",
+      "type_human_readable": "Thermostat",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/sen/temp",
+      "value": "19"
+    },
+    {
+      "name": "power-12345-10",
+      "type": "PowerNode",
+      "type_human_readable": "Light bulb",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "76"
+    },
+    {
+      "name": "power-12345-7",
+      "type": "PowerNode",
+      "type_human_readable": "Dishwasher",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "door-12345-3",
+      "type": "DoorNode",
+      "type_human_readable": "Door",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "5"
+    },
+    {
+      "name": "power-12345-2",
+      "type": "PowerNode",
+      "type_human_readable": "Microwave",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "thermostat-12345-3",
+      "type": "ThermostatNode",
+      "type_human_readable": "Thermostat",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/sen/temp",
+      "value": "21"
+    },
+    {
+      "name": "power-12345-9",
+      "type": "PowerNode",
+      "type_human_readable": "Light bulb",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "door-12345-2",
+      "type": "DoorNode",
+      "type_human_readable": "Door",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "5"
+    },
+    {
+      "name": "power-12345-5",
+      "type": "PowerNode",
+      "type_human_readable": "Television",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "switch-12345-3",
+      "type": "SwitchNode",
+      "type_human_readable": "Socket",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "0"
+    },
+    {
+      "name": "power-12345-8",
+      "type": "PowerNode",
+      "type_human_readable": "Light bulb",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "meter-12345-1",
+      "type": "MeterNode",
+      "type_human_readable": "Powermeter",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/sen/meter",
+      "value": "34688.2"
+    },
+    {
+      "name": "window-12345-1",
+      "type": "SwitchNode",
+      "type_human_readable": "Window",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "5"
+    },
+    {
+      "name": "window-12345-2",
+      "type": "SwitchNode",
+      "type_human_readable": "Window",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "5"
+    },
+    {
+      "name": "power-12345-6",
+      "type": "PowerNode",
+      "type_human_readable": "Computer",
+      "status_endpoint": "/pwr/0/rel",
+      "status": "1",
+      "value_endpoint": "/pwr/0/w",
+      "value": "81"
+    },
+    {
+      "name": "switch-12345-1",
+      "type": "SwitchNode",
+      "type_human_readable": "Access Point",
+      "status_endpoint": "/lt/0/on",
+      "status": "1",
+      "value_endpoint": "/lt/0/dim",
+      "value": "1"
+    }
+  ];
 
   return {
-    all: function() {
-      return chats;
+
+    devices: function() {
+      return devices_json;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+
+    deviceTypes: function() {
+      var deviceTypes = [];
+
+      var t = _.uniq(devices_json, 'type_human_readable'),
+          dataMap = {
+              type: 'id',
+              type_human_readable: 'name'
+          };
+
+      var deviceTypes = t.map(function (topic) {
+          var t = {};
+          for (var key in dataMap) {
+              t[dataMap[key]] = topic[key];
+          };
+          return t;
+      });
+
+      return deviceTypes;
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+
+    devicesByType: function(deviceTypeId) {
+      var devices = [];
+      for (var i = 0; i < devices_json.length; i++) {
+        if (devices_json[i].type === deviceTypeId) {
+          devices.push(devices_json[i]);
         }
       }
-      return null;
+      return devices;
     }
   };
 });

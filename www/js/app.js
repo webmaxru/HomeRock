@@ -60,7 +60,7 @@ angular.module('homeRock', ['ionic', 'homeRock.controllers', 'homeRock.services'
       }
     })
     .state('tab.devices-by-type', {
-      url: '/devices/:deviceTypeId',
+      url: '/devices/:deviceTypeName',
       views: {
         'tab-devices': {
           templateUrl: 'templates/devices-by-type.html',

@@ -2,8 +2,6 @@ angular.module('homeRock.controllers', [])
 
 .controller('DashCtrl', function($scope, Devices, lodash) {
 
-
-
   $scope.deviceTypesChartOptions = {
     chart: {
       type: 'pieChart',
@@ -28,39 +26,46 @@ angular.module('homeRock.controllers', [])
     }
   };
 
-  $scope.deviceTypesChartData = function() {
-
-    var deviceTypesChartData = _.map(_.countBy(Devices.devices(), "type_human_readable"), function(value, key) {
-
-      return {
-        "key": key,
-        "value": value
-      };
-
-    });
-
-    return deviceTypesChartData;
-
-  };
+  Devices.getDevices().then(function(response) {
+    $scope.deviceTypesChartData = response;
+  }, function(response) {
+    console.log(response);
+  });
 
 })
 
 .controller('DeviceTypesCtrl', function($scope, Devices) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
 
-  $scope.deviceTypes = Devices.deviceTypes();
+  Devices.getDeviceTypes().then(function(response) {
+    $scope.deviceTypes = response;
+  }, function(response) {
+    console.log(response);
+  });
 
 })
 
 .controller('DevicesCtrl', function($scope, $stateParams, Devices) {
 
-  $scope.devicesByType = Devices.devicesByType($stateParams.deviceTypeId);
+  Devices.getDevicesByType($stateParams.deviceTypeName).then(function(response) {
+    $scope.devicesByType = response;
+  }, function(response) {
+    console.log(response);
+  });
+
+  $scope.toggleDeviceStatus = function toggleDeviceStatus(deviceName, deviceStatus, deviceTypeName) {
+
+      console.log( "deviceName: " + deviceName + ", deviceStatus: " + deviceStatus)
+
+      Devices.updateDeviceStatus( deviceName, deviceStatus, deviceTypeName ).then(function(response) {
+
+        console.log("Resolved");
+
+      }, function(response) {
+        console.log(response);
+      });
+
+    };
+
 
 })
 
